@@ -97,10 +97,9 @@ class Aggregator:
 # writes stock data to JSON file
   def writeToJSON(self):
     p = ''
-    cwd = os.getcwd()
     today = datetime.datetime.today()
     filename = ('data-{:%a %b %d,%Y-%H-%M}.json'.format(today))
-    pathToFile = p.join((cwd, '/stockData/',filename))
+    pathToFile = p.join(('stockData/',filename))
     # f = open(pathToFile, "w+")
 
     with open(pathToFile, 'w') as f:
