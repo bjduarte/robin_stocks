@@ -12,7 +12,7 @@ def main():
   '''main class to handle stock data'''
   print ("Adding tickers")
   stk = Aggregator()
-  anal = Analyzer()
+  # anal = Analyzer()
 
   stk.addTicker('AMD', True)
   stk.addTicker('AAPL', True)

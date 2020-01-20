@@ -17,6 +17,11 @@ def main():
   anal.readInData()
   print("Data has been read into dictionary")
 
+  print('computing changes')
+  anal.computeChange()
+  print('Changes computed')
+
+
 
 if __name__ == '__main__':
   main()

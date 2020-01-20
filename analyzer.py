@@ -19,7 +19,7 @@ class Analyzer:
     self.holdings = []
     self.tickers = []
     self.prices = []
-    self.lastPrices = []
+    self.allData = []
     self.stockData = [] 
     self.dOpen = []
     self.dHigh = []
@@ -36,25 +36,65 @@ class Analyzer:
     login = r.login(username,password)
 
 
-# reads in stock data from JSON 
+# reads in stock data from JSON into a dictionary of lists
   def readInData(self):
+    p = ''
     for file in os.listdir('./stockData'):
       if fnmatch.fnmatch(file, '*.json'):
-        with open(file, 'r') as f:
-          data = json.load(f)
+        path = p.join(("./stockData/",file))
+        f = open(path, 'r')
+        self.stocks = json.load(f)
+        self.allData.append(self.stocks)
+        f.close()
 
-          self.lastPrices = data.get('current price')
-          amtChange = []
-          for newAmt in self.prices:
-            for oldAmt in self.lastPrices:
-              print("New Price: ", newAmt, '\n')
-              print("Old Price: ", oldAmt, '\n')
-          # amtChange.append(math.fabs(oldAmt - newAmt))
-#           # print(amtChange)
+
+# computes the change of stocks
+  def computeChange(self):
+    numOfFiles = len(self.allData)
+    numOfTickers = len(self.allData[0].get('current price'))
+    # files = 0
+    # j = 1
+    tempList = []
+    tempList2 = []
+    for data in range(0, numOfTickers):
+      for files in range(0, numOfFiles):
+        if data < numOfTickers and files == 0:
+          tempList.append(float(self.allData[files].get('current price')[data][0]))
+          # print(len(tempList))
+        else:
+          tempList2.append(float(self.allData[files].get('current price')[data][0]))
+          # print(len(tempList2))
+
+    res = [list(math.fabs(a - z) for a in tempList2) for z in tempList]
+    print(tempList[0])
+    print(tempList2[0])
+    print(res[0][0])
+
+    if len(tempList2) > numOfTickers:
+      amtChange = [list(math.fabs(a - z) for a in tempList2) for z in res[0]]
+      print(amtChange[0][0])
+
+# Output = [Input1[i]-Input2[i] if Input1[i] > Input2[i] \
+          # else Input1[i] for i in range(len(Input1))]
+
+
+
+# tempList = [list(map(lambda ele - ele, sub)) for sub in test_list]
+
+
+# keeps iterator from exceeding number of files
+        # num2 = self.allData[j].get('current price')[data]
+        # if j >= (numOfFiles-1):
+        #   j = 1
+        # else:
+        #   j += 1
+
+
+
 
 # # displays current holdings
 #   def holdings(self):
 #     myHoldings = r.build_holdings()
 #     for key,value in my_stocks.items():
 #       print(key,value)
-#
+
