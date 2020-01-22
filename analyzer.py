@@ -60,15 +60,15 @@ class Analyzer:
       for files in range(0, numOfFiles):
         if data < numOfTickers and files == 0:
           tempList.append(float(self.allData[files].get('current price')[data][0]))
-          # print(len(tempList))
-        else:
-          tempList2.append(float(self.allData[files].get('current price')[data][0]))
-          # print(len(tempList2))
+          print('Temp List1: ', tempList[data])
+        elif data < numOfTickers and files > 0:
+          tempList2.append(float(self.allData[files].get('current price')[data][1]))
+          print('Temp list2: ', tempList2[data])
 
     res = [list(math.fabs(a - z) for a in tempList2) for z in tempList]
-    print(tempList[0])
-    print(tempList2[0])
-    print(res[0][0])
+    # print(tempList[0])
+    # print(tempList2[0])
+    # print(res[0][0])
 
     if len(tempList2) > numOfTickers:
       amtChange = [list(math.fabs(a - z) for a in tempList2) for z in res[0]]
