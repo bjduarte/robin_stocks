@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import robin_stocks as r
+import numpy as np
 import math
 import io
 import sys
@@ -15,20 +16,10 @@ class Comp:
 
   def __init__(self):
     self.stocks = {} # dictionary of stock data sorted by symbol
-    self.watchlist = [] 
-    self.holdings = []
-    self.tickers = []
     self.prices = []
-    self.allData = []
-    self.stockData = [] 
-    self.dOpen = []
-    self.dHigh = []
-    self.dLow = []
-    self.high52 = []
-    self.low52 = []
-    self.dVolume = []
-    self.avgVolume = []
-    self.volume2 = []
+    self.lastPrice = []
+    self.numOfFiles = 0
+    self.numOfTickers = 0
 
     # Login to Robin Hood Account
     username = 'bryanduarte@me.com'
@@ -41,46 +32,51 @@ class Comp:
     p = ''
     for file in os.listdir('./stockData'):
       if fnmatch.fnmatch(file, '*.json'):
+        self.numOfFiles += 1 
         path = p.join(("./stockData/",file))
         f = open(path, 'r')
         self.stocks = json.load(f)
-        self.allData.append(self.stocks)
+
+        k = 3
+        if self.numOfFiles == 1:
+          temp = self.stocks.get('current price')
+
+          for i in temp:
+            for j in i:
+              self.lastPrice.append(float(j))
+        elif self.numOfFiles == 2:
+          temp = self.stocks.get('current price')
+
+          for i in temp:
+            for j in i:
+              self.prices.append(float(j))
+
+        if k <= self.numOfFiles:
+          self.lastPrice = self.temp
+          temp = self.stocks.get('current price')
+          
+          for i in temp:
+            for j in i:
+              self.prices.append(float(j))
+
         f.close()
 
 
 # computes the change of stocks
   def computeChange(self):
-    numOfFiles = len(self.allData)
-    numOfTickers = len(self.allData[0].get('current price'))
-    j = 1
-    tempList = []
-    tempList2 = []
-    for i in range(0, numOfTickers):
-      tempList = [x1 - x2 for (x1, x2) in zip(float(self.allData[0].get('current price')[i]), float(self.allData[1].get('current price')[i]))]
-    print(tempList)
 
-    # tempList float(self.allData[files].get('current price')[data][0])
-          # tempList2.append(float(self.allData[files].get('current price')[data][0]))
+    for i in range(2, self.numOfFiles):
+      res = np.subtract(np.array(self.lastPrice), np.array(self.prices))
+      print('List 1, list 2: ', res)
 
 
-
-    # res = [list(math.fabs(a - z) for a in tempList2) for z in tempList]
-    # for i in res:
-      # print(i)
-
-
-
-# Output = [Input1[i]-Input2[i] if Input1[i] > Input2[i] \
-          # else Input1[i] for i in range(len(Input1))]
-
-
-
-# tempList = [list(map(lambda ele - ele, sub)) for sub in test_list]
 
 
 if __name__ == '__main__':
   test = Comp()
+  print('Reading data')
   test.readInData()
+  print('Data read')
   print('Computing Change')
   test.computeChange()
   print('Change Computed')  
