@@ -143,3 +143,4 @@ class Aggregator:
           fout.write(str(data3) + "\n")
         fout.close()
 
+
