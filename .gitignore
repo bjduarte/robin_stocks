@@ -5,6 +5,10 @@ build/
 dist/
 tests/
 stockData/
+stockData.json
+myHoldings.json
+myHoldings.txt
+myHoldings copy.json
 uploadnotes.txt
 .DS_Store
 *.egg-info/
