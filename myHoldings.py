@@ -8,6 +8,7 @@ import fnmatch
 import datetime
 import time
 import json
+import math
 from itertools import zip_longest
 
 class MyHoldings:
@@ -110,7 +111,7 @@ class MyHoldings:
       totalPrice = np.sum(products)
 
       # calculating the netPrice of each stock holding
-      netPrice.append((totalPrice / numOfShares))
+      netPrice.append((round(totalPrice / numOfShares), 2))
 
     # building a dictionary for pretty printing
     symb = [i for i in self.stockData.keys()]
@@ -179,14 +180,12 @@ if __name__ == "__main__":
 
           mh.addPosition(symb, quanity, price)
           mh.netPrice()
-          print('Writing data')
           mh.writeData()
-          print('Formating data')
           mh.formatData()
           break
 
         except ValueError as ve:
-          print('Error! ', type(ve), ': ', ve)
+          print('Error! ', ve)
 
     elif option == '2':
       while True:
@@ -198,7 +197,7 @@ if __name__ == "__main__":
           break
 
         except ValueError as ve:
-          print('Error! ', type(ve), ': ', ve)
+          print('Error! ', ve)
 
     elif option == '3':
       while True:
@@ -221,7 +220,7 @@ if __name__ == "__main__":
             break
 
         except ValueError as ve:
-          print('error: ', type(ve), ve)
+          print('Error! ', ve)
 
     elif option == '4':
       mh.displayHoldings()
