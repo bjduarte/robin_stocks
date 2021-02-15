@@ -98,7 +98,7 @@ class Aggregator:
   def writeToJSON(self):
     p = ''
     today = datetime.datetime.today()
-    filename = ('data-{:%a-%b-%d,%Y-%H-%M}.json'.format(today))
+    filename = ('{:%b-%d,%Y-%H-%M}.json'.format(today))
     pathToFile = p.join(('stockData/',filename))
     with open(pathToFile, 'w') as f:
       json.dump(self.stocks, f)
@@ -123,8 +123,8 @@ class Aggregator:
     # Writing column headings and data points for each section
         pp = ''
         today = datetime.datetime.today()
-        filename = ('data-{:%a-%b-%d,%Y-%H-%M}'.format(today))
-        pathToFile = pp.join(('stockData/',filename))
+        filename = ('{:%b-%d,%Y-%H-%M}'.format(today))
+        pathToFile = pp.join(('stockData/formattedData/',filename))
         fout = open(pathToFile, "w+")
 
     # section 1 data

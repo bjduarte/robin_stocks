@@ -118,7 +118,6 @@ class MyHoldings:
     self.myHoldings = {'ticker': symb, 'lot': lots, 'netPrice': netPrice}
 
 
-
   # writes both dictionaries to json file
   # myHoldings.json contains dict for pretty printing
   # stockData.json contains bict for operations
@@ -224,6 +223,7 @@ if __name__ == "__main__":
 
     elif option == '4':
       mh.displayHoldings()
+      mh.formatData()
     elif option == '5':
       print('Exiting...')
       print("Done!")
